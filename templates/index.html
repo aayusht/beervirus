@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Embed Demo</title>
+    {{ js_resources|indent(4)|safe }}
+    {{ css_resources|indent(4)|safe }}
+    {{ plot_script|indent(4)|safe }}
+  </head>
+  <body>
+    <title>coronavirus</title>
+    {{ plot_div|indent(4)|safe }}
+    <h3>Enter a name below to view some basic data</h3>
+    <form action="." method="POST">
+        <input type='text' name='place' placeholder='Example: United States'>
+        <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+    <p>Valid place names:</p>
+    {% for place in places %} <p> {{ place }}</p> {% endfor %}
+  </body>
+</html>
