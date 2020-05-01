@@ -5,7 +5,7 @@ import datetime
 import numpy as np
 
 def fetch_json():
-    with io.open('timeseries-byLocation.json', mode='r', encoding='utf-8') as f:
+    with io.open('static/timeseries-byLocation.json', mode='r', encoding='utf-8') as f:
         return json.loads(f.read())
     # with urlopen('https://coronadatascraper.com/timeseries-byLocation.json') as url:
     #     return json.loads(url.read())
@@ -13,7 +13,7 @@ def fetch_json():
 def __get_values(place, key, data):
     to_date = lambda datestr: datetime.datetime.strptime(datestr, '%Y-%m-%d')
     first_date = to_date('2020-1-22')
-    latest_date = to_date(list(data['United States']['dates'].keys())[-1])
+    latest_date = get_dates(data)[-1]
     days = (latest_date - first_date).days + 1
     timeseries = np.empty(days)
     timeseries.fill(np.nan)
@@ -23,6 +23,12 @@ def __get_values(place, key, data):
             continue
         timeseries[index] = timeseries_point.get(key, np.nan)
     return timeseries
+
+def get_population(data):
+    return {place: data[place].get('population') for place in data.keys()}
+
+def get_dates(data):
+    return [datetime.datetime.strptime(datestr, '%Y-%m-%d') for datestr in data['United States']['dates'].keys()]
 
 def get_cases(data):
     return {place:__get_values(place, 'cases', data) for place in data.keys()}

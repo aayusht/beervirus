@@ -4,19 +4,36 @@
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Embed Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {{ js_resources|indent(4)|safe }}
     {{ css_resources|indent(4)|safe }}
     {{ plot_script|indent(4)|safe }}
   </head>
-  <body>
-    <title>coronavirus</title>
-    {{ plot_div|indent(4)|safe }}
-    <h3>Enter a name below to view some basic data</h3>
-    <form action="." method="POST">
-        <input type='text' name='place' placeholder='Example: United States'>
-        <input type="submit" class="btn btn-primary" value="Search">
-    </form>
-    <p>Valid place names:</p>
-    {% for place in places %} <p> {{ place }}</p> {% endfor %}
+  <body style='margin:0px'>
+    <div style='display:flex;'>
+        <div style='flex: 1; flex-direction:column;'>
+            <div style='height: 50vh; flex: 1;'>
+                {{ plot_div|indent(4)|safe }}
+            </div>
+            <div style='height: 50vh; flex: 1;'>
+                <div class='container'>
+                    <form action="." method="POST">
+                        <input type='text' name='function' value='cases[place]'>
+                        <input type="submit" class="btn btn-primary" value="Apply">
+                    </form>
+                    {% for place in current_places %} <p> {{ place }}</p> {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style='height: 100vh; flex: 1; overflow-y: scroll;'>
+            <h3>Enter a name below to view some basic data</h3>
+            <form action="." method="POST">
+                <input type='text' name='place' placeholder='Example: United States'>
+                <input type="submit" class="btn btn-primary" value="Add">
+            </form>
+            <p>Valid place names:</p>
+            {% for place in places %} <p> {{ place }}</p> {% endfor %}
+        </div>
+    </div>
   </body>
 </html>

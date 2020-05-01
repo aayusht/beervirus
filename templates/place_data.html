@@ -1,8 +1,0 @@
-<!doctype html>
-<title>{{ place }} data</title>
-<h1>basic data for {{ place }}</h1>
-<p>population: {{ pop }}</p>
-<p>Timeseries:</p>
-{% for info in timeseries %}
-  <p>{{ info.date }}: {{ info.cases }} cases, {{ info.deaths }} deaths</p>
-{% endfor %}
